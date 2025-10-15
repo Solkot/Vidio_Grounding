@@ -1,4 +1,4 @@
-package vidio.editor.vidioDTO;
+package vidio.editor.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -3,6 +3,7 @@ package vidio.editor.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -10,9 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import vidio.editor.service.V1Service;
-import vidio.editor.vidioDTO.TimeDTO;
-import vidio.editor.vidioDTO.VidioDTO;
+import vidio.editor.service.VService;
+import vidio.editor.service.impl.V1ServiceImpl;
+import vidio.editor.dto.TimeDTO;
+import vidio.editor.dto.VidioDTO;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +28,7 @@ import java.nio.file.StandardCopyOption;
 //@RequestMapping("/");
 public class V1Controller {
 
-    private final V1Service v1Service;
+    private final VService vService;
 
     //1. User에게서 동영상과 텍스트를 받음, 단 JSON 형식을 받을 것
     @PostMapping("/upload")
@@ -83,7 +85,7 @@ public class V1Controller {
         //4. Cut / Merge에 따라 동영상을 수정해서 사용자에게 반환
         //Merge의 경우 자른 부분만 빼고 합치기. 굳이 시간을 여러 개 받나? 모델이 그렇게 주나?
 
-        Path mergedPath = v1Service.cutAndMerge(timeDTO);
+        Path mergedPath = vService.cutAndMerge(timeDTO);
         Resource resource = new FileSystemResource(mergedPath);
 
         HttpHeaders headers = new HttpHeaders();
@@ -98,7 +100,7 @@ public class V1Controller {
     //5. 최종적으로 해당 파일 삭제 -> 내부에 존재하는 임시데이터는 javascript에서 해당 페이지를 벗어나면 삭제되도록 진행
     @DeleteMapping("/cleanup")
     public ResponseEntity<String> cleanup(@RequestParam String userName) throws IOException {
-        v1Service.deleteTemporaryDirectory(userName);
+        vService.deleteTemporaryDirectory(userName);
         return ResponseEntity.ok("Temporary files deleted for " + userName);
     }
 }

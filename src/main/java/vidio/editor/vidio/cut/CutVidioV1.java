@@ -1,17 +1,18 @@
-package vidio.editor.ffmpeg;
+package vidio.editor.vidio.cut;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.bramp.ffmpeg.*;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@Component
+@Service("cutVidioV1")
 @RequiredArgsConstructor
-public class CutVidio {
+public class CutVidioV1 implements CutVidio{
 
     private final FFmpeg ffmpeg;
     private final FFprobe ffprobe;

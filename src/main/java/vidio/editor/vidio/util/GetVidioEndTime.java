@@ -1,4 +1,4 @@
-package vidio.editor.util;
+package vidio.editor.vidio.util;
 
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;

@@ -1,11 +1,16 @@
-package vidio.editor.service;
+package vidio.editor.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import vidio.editor.ffmpeg.CutVidio;
-import vidio.editor.ffmpeg.MergeVidio;
-import vidio.editor.util.GetVidioEndTime;
-import vidio.editor.vidioDTO.TimeDTO;
+import vidio.editor.service.VService;
+import vidio.editor.service.time.modTime;
+import vidio.editor.vidio.cut.CutVidio;
+import vidio.editor.vidio.cut.CutVidioV1;
+import vidio.editor.vidio.merge.MergeVidio;
+import vidio.editor.vidio.merge.MergeVidioV1;
+import vidio.editor.vidio.util.GetVidioEndTime;
+import vidio.editor.dto.TimeDTO;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,11 +24,13 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
+@Service("v1Service")
 @RequiredArgsConstructor
-public class V1Service {
+public class V1ServiceImpl implements VService {
 
+    @Qualifier("cutVidioV1")
     private final CutVidio cutVidio;
+    @Qualifier("mergeVidioV1")
     private final MergeVidio mergeVidio;
     private final GetVidioEndTime getVidioEndTime;
 

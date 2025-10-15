@@ -1,4 +1,4 @@
-package vidio.editor.ffmpeg;
+package vidio.editor.vidio.merge;
 
 import lombok.extern.slf4j.Slf4j;
 import net.bramp.ffmpeg.FFmpeg;
@@ -12,11 +12,12 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Component
+@Service("mergeVidioV1")
 @RequiredArgsConstructor
-public class MergeVidio {
+public class MergeVidioV1 implements MergeVidio{
 
     private final FFmpeg ffmpeg;
 

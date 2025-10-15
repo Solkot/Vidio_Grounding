@@ -1,4 +1,4 @@
-package vidio.editor.service;
+package vidio.editor.service.time;
 
 import java.util.ArrayList;
 import java.util.List;
