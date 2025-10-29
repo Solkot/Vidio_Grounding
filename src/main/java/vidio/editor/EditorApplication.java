@@ -6,13 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import vidio.editor.service.VService;
-import vidio.editor.service.impl.V1ServiceImpl;
 import vidio.editor.service.impl.V2ServiceImpl;
 import vidio.editor.vidio.cut.CutVidio;
-import vidio.editor.vidio.cut.CutVidioV1;
 import vidio.editor.vidio.cut.CutVidioV2;
 import vidio.editor.vidio.merge.MergeVidio;
-import vidio.editor.vidio.merge.MergeVidioV1;
 import vidio.editor.vidio.merge.MergeVidioV2;
 import vidio.editor.vidio.util.GetVidioEndTime;
 

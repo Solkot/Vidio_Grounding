@@ -97,7 +97,7 @@ public class CutV2 {
 //        FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
 //        executor.createJob(builder).run();
 //
-//        System.out.println("✅ 동영상 잘라내기 완료");
+//        System.out.println("동영상 잘라내기 완료");
 //    }
 //}
 

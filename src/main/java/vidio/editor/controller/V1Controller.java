@@ -3,7 +3,6 @@ package vidio.editor.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import vidio.editor.client.ModelServer;
 import vidio.editor.service.VService;
-import vidio.editor.service.impl.V1ServiceImpl;
 import vidio.editor.dto.TimeDTO;
 import vidio.editor.dto.VidioDTO;
 
@@ -21,6 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,10 +30,11 @@ import java.nio.file.StandardCopyOption;
 public class V1Controller {
 
     private final VService vService;
+    private final ModelServer modelserverApi;
 
     //1. User에게서 동영상과 텍스트를 받음, 단 JSON 형식을 받을 것
     @PostMapping("/upload")
-    public void uploadVideo(
+    public ResponseEntity<String> uploadVideo(
             //@RequestParam ("status") String status, //Cut / Merge
             @RequestPart("meta") String metaJson,  // JSON을 문자열로 받음
             @RequestPart("file") MultipartFile file  // 파일
@@ -59,10 +61,22 @@ public class V1Controller {
                 ", Status: " + meta.getStatus() +
                 ", Text: " + meta.getText() +
                 ", Video saved at: " + filePath.toAbsolutePath());
+
+        //2. FastAPI에게 동영상 및 텍스트 전달
+        //보낼때 파일 이름도 함께 보낼 것
+
+        Map<String, Object> fastApiMeta = new HashMap<>();
+        fastApiMeta.put("userName", meta.getUserName());
+        fastApiMeta.put("vidioName", file.getOriginalFilename());
+        fastApiMeta.put("text", meta.getText());
+        fastApiMeta.put("status", meta.getStatus());
+
+        String response = modelserverApi.sendVideoToFastApi(fastApiMeta, filePath);
+
+        return ResponseEntity.ok("Upload & send to FastAPI done. Response: " + response);
     }
 
-    //2. FastAPI에게 동영상 및 텍스트 전달
-    //보낼때 파일 이름도 함께 보낼 것
+
 
     //3. FastAPI에게 시간을 전달 받음(JSON)
     @PostMapping(value = "/time")
