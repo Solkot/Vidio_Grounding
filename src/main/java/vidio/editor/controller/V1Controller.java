@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import vidio.editor.client.ModelServer;
+import vidio.editor.modelServer.ModelServer;
 import vidio.editor.service.VService;
 import vidio.editor.dto.TimeDTO;
 import vidio.editor.dto.VidioDTO;

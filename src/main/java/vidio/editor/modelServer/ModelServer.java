@@ -1,4 +1,4 @@
-package vidio.editor.client;
+package vidio.editor.modelServer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
